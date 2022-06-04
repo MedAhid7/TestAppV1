@@ -12,22 +12,11 @@ import java.util.Date;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Invoice {
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+public class Invoice extends Devis{
+
     private String codeInvoice;
 
-    private String nom;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creation;
-    private Date validation;
-    private Date echeance;
-    private float taxe1;
-    private float taxe2;
-    private float remise;
-    private String livraison;
+   
 
     @OneToOne
     private Devis devis;

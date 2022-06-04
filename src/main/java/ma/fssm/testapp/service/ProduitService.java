@@ -5,9 +5,8 @@ import ma.fssm.testapp.dto.ProductDto;
 
 public interface ProduitService {
 
-    ProductDto  createProductFromFourni(ProductDto produitDto) throws UserNotFoundException;
 
-    ProductDto createProduct(ProductDto produitDto);
+    ProductDto createProduct(ProductDto produitDto) throws UserNotFoundException;
 
     ProductDto updateProduct(Long id, ProductDto produitDto) throws  Exception;
 }

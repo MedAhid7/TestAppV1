@@ -13,9 +13,8 @@ public class Produit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
-    @JoinColumn(nullable = true)
     @ManyToOne
-    private Client client;
+    private Fournisseur fournisseur;
     private String reference;
     private String libelle;
     private String description;

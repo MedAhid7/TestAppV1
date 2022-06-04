@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import ma.fssm.testapp.UserNotFoundException;
 import ma.fssm.testapp.dto.ProductDto;
 import ma.fssm.testapp.entities.Client;
+import ma.fssm.testapp.entities.Fournisseur;
 import ma.fssm.testapp.entities.Produit;
 import ma.fssm.testapp.repo.ClientRepo;
+import ma.fssm.testapp.repo.FournisseurRepo;
 import ma.fssm.testapp.repo.ProduitRepo;
 
 import org.modelmapper.ModelMapper;
@@ -18,41 +20,32 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class ProduitServiceImpl implements ProduitService {
-    private final ClientRepo clientRepo;
+    private final FournisseurRepo fournisseurRepo;
     private final ProduitRepo produitRepo;
     private final ModelMapper modelMapper = new ModelMapper();
     @Override
-    public ProductDto  createProductFromFourni(ProductDto produitDto) throws UserNotFoundException {
+    public ProductDto  createProduct(ProductDto produitDto) throws UserNotFoundException {
         log.info("Saving new Product");
-        Client user = clientRepo.findById(produitDto.getClient().getUserId()).orElse(null);
-        if (user == null){
+        Fournisseur fournisseur = fournisseurRepo.findById(produitDto.getFournisseur().getUserId()).orElse(null);
+        if (fournisseur == null){
              throw new UserNotFoundException("User not found!");
         }
         Produit produit = modelMapper.map(produitDto, Produit.class);
 
-        produit.setClient(user);
+        produit.setFournisseur(fournisseur);
 
         Produit newProduct = produitRepo.save(produit);
         ProductDto savedProduct= modelMapper.map(newProduct, ProductDto.class);
         return savedProduct;
     }
 
-    @Override
-    public ProductDto  createProduct(ProductDto produitDto) {
-
-        Produit produit = modelMapper.map(produitDto, Produit.class);
-        Produit newProduct = produitRepo.save(produit);
-        ProductDto savedProduct= modelMapper.map(newProduct, ProductDto.class);
-        log.info("Saving new Product");
-        return savedProduct;
-    }
     @Override
     public ProductDto updateProduct(Long id, ProductDto produitDto) throws  Exception {
         log.info("update Product");
         Produit produit = produitRepo.findById(id)
                 .orElseThrow(()->new Exception("User not found"));
-        Client fournisseur = clientRepo.findById(produitDto.getClient().getUserId()).orElse(null);
-        produit.setClient(fournisseur);
+        Fournisseur fournisseur = fournisseurRepo.findById(produitDto.getFournisseur().getUserId()).orElse(null);
+        produit.setFournisseur(fournisseur);
         produit = modelMapper.map(produitDto, Produit.class);
         Produit saveProduct = produitRepo.save(produit);
         return modelMapper.map(saveProduct, ProductDto.class);

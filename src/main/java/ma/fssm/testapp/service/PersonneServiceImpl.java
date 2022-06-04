@@ -9,6 +9,7 @@ import ma.fssm.testapp.entities.Client;
 import ma.fssm.testapp.entities.Fournisseur;
 import ma.fssm.testapp.repo.ClientRepo;
 import ma.fssm.testapp.repo.FournisseurRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,34 +21,30 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Transactional
 public class PersonneServiceImpl implements PersonneService {
+    private final ModelMapper dtoMapper = new ModelMapper();
     private final ClientRepo clientRepo;
     private final FournisseurRepo fournisseurRepo;
 
     @Override
-    public ClientDto createCli(ClientDto client) {
+    public ClientDto createCli(ClientDto clientDto) {
+        Client client = dtoMapper.map(clientDto, Client.class);
+
+        client.setUserId(UUID.randomUUID().toString());
+        Client newClient = clientRepo.save(client);
+        ClientDto savedClient= dtoMapper.map(newClient, ClientDto.class);
+       
         log.info("Saving new Client");
-
-        Client personne = new Client();
-        BeanUtils.copyProperties(client, personne);
-        personne.setUserId(UUID.randomUUID().toString());
-
-        Client newPersonne = clientRepo.save(personne);
-        ClientDto savedClient= new ClientDto();
-        BeanUtils.copyProperties(newPersonne, savedClient);
         return savedClient;
     }
 
     @Override
     public FournisseurDto createFournisseur(FournisseurDto fournisseurDto) {
-        log.info("Saving new Fournisseur");
+        Fournisseur personne = dtoMapper.map(fournisseurDto, Fournisseur.class);
 
-        Fournisseur personne = new Fournisseur();
-        BeanUtils.copyProperties(fournisseurDto, personne);
         personne.setUserId(UUID.randomUUID().toString());
-
         Fournisseur newPersonne = fournisseurRepo.save(personne);
-        FournisseurDto savedFourni= new FournisseurDto();
-        BeanUtils.copyProperties(newPersonne, savedFourni);
+        FournisseurDto savedFourni= dtoMapper.map(newPersonne, FournisseurDto.class);
+        log.info("Saving new Fournisseur");
         return savedFourni;
     }
 }

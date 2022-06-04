@@ -10,5 +10,5 @@ public class ProductDto {
     private String libelle;
     private String description;
     private float prix;//fait reference au cervice offert
-    private UserAllDto client;
+    private UserAllDto fournisseur;
 }

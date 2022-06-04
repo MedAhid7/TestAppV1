@@ -1,9 +1,9 @@
 package ma.fssm.testapp.web;
 
 import lombok.RequiredArgsConstructor;
+import ma.fssm.testapp.UserNotFoundException;
 import ma.fssm.testapp.dto.ProductDto;
 import ma.fssm.testapp.request.ProduitRequest;
-import ma.fssm.testapp.response.ProduitsFromFResponse;
 import ma.fssm.testapp.response.ProduitsResponse;
 import ma.fssm.testapp.service.ProduitService;
 
@@ -20,17 +20,10 @@ import org.springframework.web.bind.annotation.*;
 public class ProduitController {
     private final ProduitService produitService;
     private final ModelMapper modelMapper = new ModelMapper();
-    @PostMapping(value = "/create/fromFournisseur", consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<ProduitsFromFResponse> saveProductFromFournisseur (@RequestBody ProduitsFromFResponse request) {
-        ProductDto produit= modelMapper.map(request, ProductDto.class);
-        ProductDto createProduit = produitService.createProduct(produit);
-        ProduitsFromFResponse response = modelMapper.map(createProduit, ProduitsFromFResponse.class);
-        return new ResponseEntity<ProduitsFromFResponse>(response, HttpStatus.CREATED);
-    }
+
     @PostMapping(value = "/create", consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<ProduitsResponse> saveProduct (@RequestBody ProduitRequest request) {
+    public ResponseEntity<ProduitsResponse> saveProduct (@RequestBody ProduitRequest request) throws UserNotFoundException {
         ProductDto produit= modelMapper.map(request, ProductDto.class);
         ProductDto createProduit = produitService.createProduct(produit);
         ProduitsResponse response = modelMapper.map(createProduit, ProduitsResponse.class);

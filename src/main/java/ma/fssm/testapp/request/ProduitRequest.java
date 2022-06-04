@@ -9,5 +9,5 @@ public class ProduitRequest {
     private String libelle;
     private String description;
     private float prix;
-    private UserRequest client;
+    private UserRequest fournisseur;
 }

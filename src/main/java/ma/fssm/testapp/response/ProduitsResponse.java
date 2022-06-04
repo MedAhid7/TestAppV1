@@ -10,4 +10,5 @@ public class ProduitsResponse {
     private String libelle;
     private String description;
     private float prix;
+    private UserResponse fournisseur;
 }

@@ -47,7 +47,7 @@ public class FactureDevisServiseImpl implements FactureDevisServise {
 
         Invoice invoice = dtoMaper.map(invoiceDto, Invoice.class);
 
-        invoice.setInvoiceId(UUID.randomUUID().toString());
+        invoice.setCodeInvoice(UUID.randomUUID().toString());
         invoice.setCreation(new Date());
         invoice.setDevis(devis);
 
@@ -68,7 +68,7 @@ public class FactureDevisServiseImpl implements FactureDevisServise {
         }
 
         Devis devis = dtoMaper.map(devisDto, Devis.class);
-        devis.setIdDevis(UUID.randomUUID().toString());
+        devis.setCodeDevis(UUID.randomUUID().toString());
         devis.setCreation(new Date());
 
         devis.setClient(client);
@@ -81,18 +81,14 @@ public class FactureDevisServiseImpl implements FactureDevisServise {
 
     @Override
     public DevisDto updateDevis(Long id, DevisDto devisDto) throws DevisNotFoundException {
-        log.info("update devis");
         Devis devis = devisRepo.findById(id)
                 .orElseThrow(()->new DevisNotFoundException("Devis not found"));
         Client client = clientRepo.findById(devisDto.getClient().getUserId()).orElse(null);
         devis.setClient(client);
-        //Optional<Fournisseur> user =  fournisseurRepo.findById(devisDto.getUser().getUserId());
-        //Fournisseur fournisseur = user.get();
-        // devis.setUser(fournisseur);
-
-        devis = dtoMaper.map(devisDto, Devis.class);
         Devis updateDevis = devisRepo.save(devis);
-        return dtoMaper.map(updateDevis, DevisDto.class);
+        DevisDto savedDevis = dtoMaper.map(updateDevis, DevisDto.class);
+        log.info("update devis");
+        return savedDevis;
     }
     /*@Override
     public InvoiceDto updateInvoice(String id, InvoiceDto invoiceDto) throws InvoiceNotFoundException {

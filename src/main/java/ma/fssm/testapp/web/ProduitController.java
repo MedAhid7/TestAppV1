@@ -38,12 +38,4 @@ public class ProduitController {
         return new ResponseEntity<ProduitsResponse>(response, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/update/fromFourni/{id}")
-    public ResponseEntity<ProduitsResponse> updateProductFromFourni(@PathVariable Long id, @RequestBody ProductDto product) throws  Exception {
-        product.setProductId(id);
-        ProductDto updateProduct = produitService.updateProduct(id, product);
-        ProduitsResponse response = modelMapper.map(updateProduct, ProduitsResponse.class);
-        return new ResponseEntity<ProduitsResponse>(response, HttpStatus.ACCEPTED);
-    }
-
 }

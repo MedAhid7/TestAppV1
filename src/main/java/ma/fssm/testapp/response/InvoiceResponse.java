@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 public class InvoiceResponse {
-    private String invoiceId;
+    private String codeInvoice;
     private String nom;
     private Date creation;
     private Date validation;

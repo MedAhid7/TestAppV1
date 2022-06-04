@@ -9,13 +9,10 @@ import javax.persistence.*;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
-public class Devis extends InvoiceDevis{
+public class Devis extends Invoice{
    // @GeneratedValue(generator = "UUID2")
    // @GenericGenerator(name="UUID2", strategy = "org.hibernate.id.UUIDGenerator")
-    private String idDevis;
+    private String codeDevis;
     @ManyToOne
     private Client client;
-    @ManyToOne
-    private Fournisseur fournisseur;
-
 }

@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class InvoiceDto{
     private Long id;
-    private String invoiceId;
+    private String codeInvoice;
     private String nom;
     private Date creation;
     private Date validation;
@@ -19,6 +19,5 @@ public class InvoiceDto{
     private String livraison;
     private DevisAllDto devis;
     private UserAllDto client;
-    private UserAllDto fournisseur;
 
 }

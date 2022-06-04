@@ -10,10 +10,8 @@ import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data @NoArgsConstructor
 @DiscriminatorValue("FOR")
 public class Fournisseur extends Personne{
-    @OneToMany(mappedBy = "fournisseur")
-    private List<Invoice>  invoices;
 
 }

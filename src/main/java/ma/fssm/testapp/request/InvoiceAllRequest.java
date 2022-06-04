@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class InvoiceAllRequest {
-    private String invoiceId;
+    private Long id;
 }

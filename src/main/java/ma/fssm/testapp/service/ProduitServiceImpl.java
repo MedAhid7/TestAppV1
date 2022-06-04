@@ -41,13 +41,14 @@ public class ProduitServiceImpl implements ProduitService {
 
     @Override
     public ProductDto updateProduct(Long id, ProductDto produitDto) throws  Exception {
-        log.info("update Product");
+
         Produit produit = produitRepo.findById(id)
                 .orElseThrow(()->new Exception("User not found"));
         Fournisseur fournisseur = fournisseurRepo.findById(produitDto.getFournisseur().getUserId()).orElse(null);
         produit.setFournisseur(fournisseur);
         produit = modelMapper.map(produitDto, Produit.class);
         Produit saveProduct = produitRepo.save(produit);
+        log.info("update Product");
         return modelMapper.map(saveProduct, ProductDto.class);
     }
 

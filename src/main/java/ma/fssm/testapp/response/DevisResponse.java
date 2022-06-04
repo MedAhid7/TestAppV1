@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class DevisResponse {
     private Long id;
-    private String idDevis;
+    private String codeDevis;
     private String nom;
     private Date creation;
     private Date validation;

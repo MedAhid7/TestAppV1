@@ -12,6 +12,4 @@ public class ClientResponse {
     private int telephone;
     private String nomContact;
     private String email;
-    private List<InvoiceAllResponse> invoices;
-    private List<InvoiceAllResponse>  devis;
 }

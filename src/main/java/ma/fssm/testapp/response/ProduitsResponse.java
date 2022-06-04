@@ -1,0 +1,13 @@
+package ma.fssm.testapp.response;
+
+import lombok.Data;
+
+
+@Data
+public class ProduitsResponse {
+    private Long productId;
+    private String reference;
+    private String libelle;
+    private String description;
+    private float prix;
+}
